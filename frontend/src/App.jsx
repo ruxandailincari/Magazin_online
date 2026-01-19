@@ -9,6 +9,8 @@ import Layout from './components/Layout'; // Importă Layout-ul
 import AdminChatPage from './pages/AdminChatPage';
 import { CartProvider } from './contexts/CartContext'; // <--- Import
 import  CartPage  from './pages/CartPage';
+import RegisterPage from './pages/RegisterPage';
+import { ToastContainer } from 'react-toastify';
 
 // Modificăm ProtectedPage să folosească Layout
 function ProtectedPage({ page, allowed = [] }) {
@@ -35,8 +37,9 @@ export default function App() {
         <CartProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/" element={<Layout><ProductsPage /></Layout>} />
             {/* Rute protejate cu Meniu */}
-            <Route path="/" element={<ProtectedPage page={<ProductsPage />} />} />
             <Route path="/admin" element={<ProtectedPage page={<AdminDashboard />} allowed={['ADMIN']} />} />
             <Route path="/admin/products/new" element={<ProtectedPage page={<ProductFormPage />} allowed={['ADMIN']} />} />
             <Route path="/admin/products/edit/:id" element={<ProtectedPage page={<ProductFormPage />} allowed={['ADMIN']} />} />
@@ -44,6 +47,7 @@ export default function App() {
             <Route path="/cart" element={<ProtectedPage page={<CartPage />} />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+          <ToastContainer />
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

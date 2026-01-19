@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import {toast} from 'react-toastify'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
@@ -12,29 +13,19 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const { data } = await api.post('/auth/login', { username, password });
-        
-        // Presupunem că backend-ul returnează: { token: "...", role: "...", username: "...", id: 1 }
-        // Dacă backend-ul nu trimite ID și Username, va trebui să decodăm token-ul (JWT), 
-        // dar pentru moment încercăm să le luăm din răspuns.
-        
-        const userData = {
-          role: data.role,
-          username: data.username || username, // Fallback la ce a scris in input
-          id: data.id || '0' // Un ID temporar dacă backend-ul nu îl trimite
-        };
+        await api.post('/auth/register', { username, password });
 
-        login(data.token, userData); 
-        navigate('/');
+        toast.success('Inregistrare efectuata cu succes');
+        navigate('/login');
       } catch (err) {
-        alert(err.response?.data || 'Login eșuat');
+        toast.error(err.response?.data?.message || 'Register eșuat');
       }
     };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
         <input
           className="w-full mb-4 px-3 py-2 border rounded"
@@ -53,15 +44,8 @@ export default function LoginPage() {
         />
 
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-          Sign in
+          Creeaza cont
         </button>
-
-        <div>
-          Nu esti inregistrat?
-          <Link to="/register" className="relative p-2 text-gray-400 hover:text-gray-500">
-            Register
-          </Link>
-        </div>
       </form>
     </div>
   );

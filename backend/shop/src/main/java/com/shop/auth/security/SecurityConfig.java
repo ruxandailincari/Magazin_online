@@ -39,13 +39,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/webjars/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/webjars/**", "/error").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
 
                         /* ---- CUSTOMER – doar citire ---- */
                         // Folosim hasAnyAuthority pentru a potrivi exact "CUSTOMER" sau "ADMIN" din JWT
                         .requestMatchers(HttpMethod.GET, "/api/products/**")
-                        .hasAnyAuthority("CUSTOMER", "ADMIN")
+                        .permitAll()
 
                         /* ---- ADMIN – CRUD complet ---- */
                         // Folosim hasAuthority pentru a potrivi exact "ADMIN"
