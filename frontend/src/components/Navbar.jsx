@@ -53,19 +53,21 @@ export default function Navbar() {
                     </span>
                 )}
                 </Link>
-
-                <Link to="/login" className="relative p-2 text-gray-400 hover:text-gray-500">
-                  Login
-                </Link>
             {/* ... restul codului pentru logout ... */}
-            { user && (
+            { user ? (
               <>
               <div className="text-sm text-gray-600 hidden md:block">
                 Salut, <span className="font-semibold text-gray-900">{user?.role}</span>
               </div>
               <button onClick={logout} className="...">Log out</button>
             </>
-            )}
+            )
+              :
+              (
+                <Link to="/login" className="relative p-2 text-gray-400 hover:text-gray-500">
+                  Login
+                </Link>
+              )}
           </div>
         </div>
       </div>
