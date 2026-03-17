@@ -3,6 +3,7 @@ A modern, end-to-end e-commerce application built with Spring Boot and React . T
 
 ## Overview
 A complete online store solution allowing customers to browse products, manage a shopping cart and place orders, while administrators can manage inventory and view analytics. The system integrates real-time chat between customers and admins using Firebase Firestore.
+Link: https://shop-ruxanda.netlify.app/
 
 ## Key Features
 - Secure Authentication:
